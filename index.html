@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Matt Vincent — Music</title>
+<meta name="description" content="Country and rock from Georgia. All songs written, recorded, produced, and performed by Matt Vincent. Listen on Apple Music, Spotify, and YouTube Music.">
+
+<meta property="og:title" content="Matt Vincent">
+<meta property="og:description" content="Country and rock from Georgia. Listen on Apple Music, Spotify, and YouTube Music.">
+<meta property="og:type" content="music.musician">
+<meta property="og:image" content="img/matt.jpg">
+
+<style>
+  :root {
+    --bg: #0b0d12;
+    --panel: #12151d;
+    --ink: #f4f6fa;
+    --dim: #8c93a3;
+    --accent: #ff6b45;
+    --line: rgba(255,255,255,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 620px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Hero ---------- */
+
+  header {
+    padding: 72px 0 52px;
+    text-align: center;
+    position: relative;
+  }
+  header::before {
+    content: "";
+    position: absolute;
+    top: -140px; left: 50%;
+    transform: translateX(-50%);
+    width: 540px; height: 540px;
+    background: radial-gradient(circle, rgba(255,107,69,0.14) 0%, transparent 62%);
+    pointer-events: none;
+  }
+  .portrait {
+    width: 132px; height: 132px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 26px;
+    position: relative;
+    border: 2px solid rgba(255,107,69,0.3);
+  }
+  h1 {
+    font-size: clamp(42px, 11vw, 64px);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1.02;
+    position: relative;
+  }
+
+  /* ---------- Listen buttons ---------- */
+
+  .listen {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 30px;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 22px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 14.5px;
+    font-weight: 600;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary { background: var(--accent); color: #14161c; }
+  .btn-primary:hover { background: #ff7d5c; }
+  .btn-secondary {
+    background: rgba(255,255,255,0.07);
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.11); }
+  .btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+  /* ---------- Sections ---------- */
+
+  section { padding: 44px 0; border-top: 1px solid var(--line); }
+  h2 {
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 20px;
+  }
+
+
+  /* ---------- Songs ---------- */
+
+  .songs { display: flex; flex-direction: column; }
+  .song {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 7px 8px;
+    border-radius: 11px;
+    transition: background 0.15s ease;
+  }
+  .song:hover { background: var(--panel); }
+
+  .art {
+    position: relative;
+    width: 54px; height: 54px;
+    flex-shrink: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--panel);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .art img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .art .play {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+  .art .play::after {
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-42%, -50%);
+    border-style: solid;
+    border-width: 8px 0 8px 13px;
+    border-color: transparent transparent transparent #fff;
+  }
+  .art:hover .play,
+  .song.playing .art .play { opacity: 1; }
+
+  .song.playing .art .play::after {
+    border-width: 0;
+    width: 12px; height: 13px;
+    transform: translate(-50%, -50%);
+    background:
+      linear-gradient(#fff, #fff) 0 0 / 4px 100% no-repeat,
+      linear-gradient(#fff, #fff) 100% 0 / 4px 100% no-repeat;
+  }
+
+  .song-link {
+    flex: 1;
+    text-decoration: none;
+    color: inherit;
+    padding: 12px 0;
+    min-width: 0;
+  }
+  .song-title {
+    font-weight: 500;
+    font-size: 16.5px;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .song.playing .song-title { color: var(--accent); }
+
+  /* ---------- App callout ---------- */
+
+  .app-card {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 15px;
+    padding: 19px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s ease;
+  }
+  .app-card:hover { border-color: rgba(255,107,69,0.35); }
+  .app-icon {
+    width: 58px; height: 58px;
+    border-radius: 13px;
+    flex-shrink: 0;
+    background:
+      radial-gradient(circle at 50% 50%,
+        #ffb199 0 12%,
+        #ff6b45 12% 19%,
+        transparent 19%),
+      radial-gradient(circle at 50% 50%,
+        transparent 0 27%,
+        rgba(255,107,69,0.55) 27% 29%,
+        transparent 29%),
+      radial-gradient(circle at 50% 50%,
+        transparent 0 38%,
+        rgba(255,107,69,0.3) 38% 40%,
+        transparent 40%),
+      linear-gradient(#12151f, #05060a);
+  }
+  .app-name { font-weight: 600; font-size: 15.5px; }
+  .app-desc { color: var(--dim); font-size: 13.5px; margin-top: 2px; }
+
+  /* ---------- Contact ---------- */
+
+  .contact p { color: #c9cfdb; }
+  .contact a { color: var(--accent); text-decoration: none; }
+  .contact a:hover { text-decoration: underline; }
+
+  /* ---------- Footer ---------- */
+
+  footer {
+    padding: 36px 0 56px;
+    border-top: 1px solid var(--line);
+    color: var(--dim);
+    font-size: 13.5px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  footer a { color: var(--dim); text-decoration: none; }
+  footer a:hover { color: var(--ink); }
+
+  @media (max-width: 480px) {
+    header { padding: 56px 0 42px; }
+    .portrait { width: 112px; height: 112px; }
+    .btn { padding: 12px 18px; font-size: 13.5px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <img class="portrait" src="img/matt.jpg" alt="Matt Vincent">
+    <h1>Matt Vincent</h1>
+
+    <div class="listen">
+      <a class="btn btn-primary" href="https://music.apple.com/us/artist/matt-vincent/1458251083" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/></svg>
+        Apple Music
+      </a>
+      <a class="btn btn-secondary" href="https://open.spotify.com/artist/02GZl0bveozoxVFYF3Tsxa" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm4.59 14.42a.62.62 0 01-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.63.63 0 01-.28-1.22c3.81-.87 7.08-.5 9.72 1.11.29.18.39.57.21.86zm1.22-2.72a.78.78 0 01-1.07.26c-2.69-1.65-6.79-2.13-9.97-1.17a.78.78 0 11-.45-1.49c3.63-1.1 8.15-.57 11.24 1.33.37.23.48.71.25 1.07zm.11-2.84C14.7 8.94 9.1 8.76 6.02 9.7a.94.94 0 11-.54-1.8c3.53-1.07 9.72-.86 13.56 1.42a.94.94 0 01-.96 1.61z"/></svg>
+        Spotify
+      </a>
+      <a class="btn btn-secondary" href="https://music.youtube.com/@mdvincent12" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18.2a8.2 8.2 0 110-16.4 8.2 8.2 0 010 16.4zM9.9 8.4l6 3.6-6 3.6V8.4z"/></svg>
+        YouTube Music
+      </a>
+    </div>
+  </header>
+
+  <section>
+    <h2>Songs</h2>
+    <div class="songs">
+
+      <div class="song" data-i="0">
+        <button class="art" aria-label="Play preview of Brother">
+          <img src="https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/f6/15/61/f615615c-7868-776f-7ab5-6022150a5e1d/195448536171.jpg/300x300bb.jpg" alt="Brother cover" loading="lazy">
+          <span class="play"></span>
+        </button>
+        <a class="song-link" href="https://music.apple.com/us/album/brother/1535156087?i=1535156088" target="_blank" rel="noopener">
+          <span class="song-title">Brother</span>
+        </a>
+      </div>
+
+      <div class="song" data-i="1">
+        <button class="art" aria-label="Play preview of Seems to Me">
+          <img src="https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/2f/1a/5e/2f1a5e02-828f-4f71-c544-6d2c8822803c/195999051956.jpg/300x300bb.jpg" alt="Seems to Me cover" loading="lazy">
+          <span class="play"></span>
+        </button>
+        <a class="song-link" href="https://music.apple.com/us/album/seems-to-me/1544423307?i=1544423309" target="_blank" rel="noopener">
+          <span class="song-title">Seems to Me</span>
+        </a>
+      </div>
+
+      <div class="song" data-i="2">
+        <button class="art" aria-label="Play preview of My Best Man">
+          <img src="https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/41/07/04/410704af-e1bc-0589-961b-190b7877da3a/193428923706.jpg/300x300bb.jpg" alt="My Best Man cover" loading="lazy">
+          <span class="play"></span>
+        </button>
+        <a class="song-link" href="https://music.apple.com/us/album/my-best-man/1458251300?i=1458251302" target="_blank" rel="noopener">
+          <span class="song-title">My Best Man</span>
+        </a>
+      </div>
+
+      <div class="song" data-i="3">
+        <button class="art" aria-label="Play preview of Fighter">
+          <img src="https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/29/c4/6d/29c46dc0-606d-dfde-0636-ae62abbfac5b/194660764812.jpg/300x300bb.jpg" alt="Fighter cover" loading="lazy">
+          <span class="play"></span>
+        </button>
+        <a class="song-link" href="https://music.apple.com/us/album/fighter/1500077705?i=1500077706" target="_blank" rel="noopener">
+          <span class="song-title">Fighter</span>
+        </a>
+      </div>
+
+      <div class="song" data-i="4">
+        <button class="art" aria-label="Play preview of The Game">
+          <img src="https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/fb/db/09/fbdb09ad-4af9-cf25-eefe-2e7ffb369690/198003151895.jpg/300x300bb.jpg" alt="The Game cover" loading="lazy">
+          <span class="play"></span>
+        </button>
+        <a class="song-link" href="https://music.apple.com/us/album/the-game/1609779843?i=1609779844" target="_blank" rel="noopener">
+          <span class="song-title">The Game</span>
+        </a>
+      </div>
+
+      <div class="song" data-i="5">
+        <button class="art" aria-label="Play preview of Back Then">
+          <img src="https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/08/13/7c/08137c44-18b0-9ca5-9f88-a0f88ecd5b5f/198000157234.jpg/300x300bb.jpg" alt="Back Then cover" loading="lazy">
+          <span class="play"></span>
+        </button>
+        <a class="song-link" href="https://music.apple.com/us/album/back-then/1564548209?i=1564548210" target="_blank" rel="noopener">
+          <span class="song-title">Back Then</span>
+        </a>
+      </div>
+
+      <div class="song" data-i="6">
+        <button class="art" aria-label="Play preview of Perfect Amount of Bad">
+          <img src="https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/99/1d/51/991d51f5-f86b-fab5-7120-bb07ac7d6a9e/195079386145.jpg/300x300bb.jpg" alt="Perfect Amount of Bad cover" loading="lazy">
+          <span class="play"></span>
+        </button>
+        <a class="song-link" href="https://music.apple.com/us/album/perfect-amount-of-bad/1511429534?i=1511429538" target="_blank" rel="noopener">
+          <span class="song-title">Perfect Amount of Bad</span>
+        </a>
+      </div>
+
+      <div class="song" data-i="7">
+        <button class="art" aria-label="Play preview of Bump in the Road">
+          <img src="https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/97/b1/82/97b18278-3298-71a4-23d4-efd3f1458059/194660245502.jpg/300x300bb.jpg" alt="Bump in the Road cover" loading="lazy">
+          <span class="play"></span>
+        </button>
+        <a class="song-link" href="https://music.apple.com/us/album/bump-in-the-road/1488220729?i=1488220730" target="_blank" rel="noopener">
+          <span class="song-title">Bump in the Road</span>
+        </a>
+      </div>
+
+      <div class="song" data-i="8">
+        <button class="art" aria-label="Play preview of Happy Birthday">
+          <img src="https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/41/07/04/410704af-e1bc-0589-961b-190b7877da3a/193428923706.jpg/300x300bb.jpg" alt="Happy Birthday cover" loading="lazy">
+          <span class="play"></span>
+        </button>
+        <a class="song-link" href="https://music.apple.com/us/album/happy-birthday/1458251300?i=1458251516" target="_blank" rel="noopener">
+          <span class="song-title">Happy Birthday</span>
+        </a>
+      </div>
+
+      <div class="song" data-i="9">
+        <button class="art" aria-label="Play preview of That&#39;s a Star">
+          <img src="https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/41/07/04/410704af-e1bc-0589-961b-190b7877da3a/193428923706.jpg/300x300bb.jpg" alt="That&#39;s a Star cover" loading="lazy">
+          <span class="play"></span>
+        </button>
+        <a class="song-link" href="https://music.apple.com/us/album/thats-a-star/1458251300?i=1458251305" target="_blank" rel="noopener">
+          <span class="song-title">That's a Star</span>
+        </a>
+      </div>
+
+      <div class="song" data-i="10">
+        <button class="art" aria-label="Play preview of 2Is1">
+          <img src="https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/41/07/04/410704af-e1bc-0589-961b-190b7877da3a/193428923706.jpg/300x300bb.jpg" alt="2Is1 cover" loading="lazy">
+          <span class="play"></span>
+        </button>
+        <a class="song-link" href="https://music.apple.com/us/album/2is1/1458251300?i=1458251304" target="_blank" rel="noopener">
+          <span class="song-title">2Is1</span>
+        </a>
+      </div>
+
+      <div class="song" data-i="11">
+        <button class="art" aria-label="Play preview of Red Summer">
+          <img src="https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/41/07/04/410704af-e1bc-0589-961b-190b7877da3a/193428923706.jpg/300x300bb.jpg" alt="Red Summer cover" loading="lazy">
+          <span class="play"></span>
+        </button>
+        <a class="song-link" href="https://music.apple.com/us/album/red-summer/1458251300?i=1458251303" target="_blank" rel="noopener">
+          <span class="song-title">Red Summer</span>
+        </a>
+      </div>
+
+      <div class="song" data-i="12">
+        <button class="art" aria-label="Play preview of Half">
+          <img src="https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/41/07/04/410704af-e1bc-0589-961b-190b7877da3a/193428923706.jpg/300x300bb.jpg" alt="Half cover" loading="lazy">
+          <span class="play"></span>
+        </button>
+        <a class="song-link" href="https://music.apple.com/us/album/half/1458251300?i=1458251301" target="_blank" rel="noopener">
+          <span class="song-title">Half</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Also</h2>
+    <a class="app-card" href="taptempo/">
+      <div class="app-icon"></div>
+      <div>
+        <div class="app-name">Free Tap Tempo</div>
+        <div class="app-desc">A tap tempo app for iPhone and iPad. No ads, no cost, ever.</div>
+      </div>
+    </a>
+  </section>
+
+  <section class="contact">
+    <h2>Contact</h2>
+    <p><a href="mailto:mdv.vincent@gmail.com">mdv.vincent@gmail.com</a></p>
+  </section>
+
+  <footer>
+    <span>© 2026 Matt Vincent</span>
+    <span>
+      <a href="taptempo/">Free Tap Tempo</a> ·
+      <a href="taptempo/privacy.html">Privacy</a>
+    </span>
+  </footer>
+
+</div>
+
+
+<script>
+(function () {
+  var previews = ["https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview124/v4/4a/e5/d6/4ae5d61f-7b90-2794-48be-61319b38aa16/mzaf_3196368332287682310.plus.aac.p.m4a", "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview114/v4/0b/07/95/0b0795b3-f553-3ece-4b01-3f69d84a6819/mzaf_8925340843049087487.plus.aac.p.m4a", "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview123/v4/8e/9c/60/8e9c601d-0778-1f74-3626-a6638314c22a/mzaf_8353126471945056662.plus.aac.p.m4a", "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview113/v4/e6/df/84/e6df8466-19d2-f234-e2b3-6bf5ab5b7c9f/mzaf_17862423852786881806.plus.aac.p.m4a", "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/3f/c7/91/3fc791a7-94f3-bb32-aa31-d60cc617bec3/mzaf_17827243327036997902.plus.aac.p.m4a", "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/f9/81/af/f981af6f-a643-b673-ea42-3f2305be9c5c/mzaf_2735932550638439883.plus.aac.p.m4a", "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview123/v4/c8/a9/ce/c8a9ceaf-0d8a-bc6a-d2d5-b4c41ccdf2a3/mzaf_12500782286041566943.plus.aac.p.m4a", "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview123/v4/73/de/f0/73def0ad-ed5b-4223-8bb8-e23bdc89d192/mzaf_12764046880496450173.plus.aac.p.m4a", "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/68/e0/f2/68e0f2e0-3fb0-88f4-7ca4-f94599c633e7/mzaf_10733543897699370072.plus.aac.p.m4a", "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview113/v4/7d/ea/14/7dea1413-bdbc-969c-cd47-158d63eaef04/mzaf_2337433992625241426.plus.aac.p.m4a", "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview113/v4/97/5a/e3/975ae371-4455-47aa-3405-e33b82ad089c/mzaf_4573432747962624664.plus.aac.p.m4a", "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview123/v4/31/db/62/31db62b1-702b-b171-2a2b-8ce193b63f60/mzaf_4475432403330809460.plus.aac.p.m4a", "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview123/v4/ad/7a/0b/ad7a0b83-d4d6-07b8-d08c-c24b73445b16/mzaf_7086403190558787201.plus.aac.p.m4a"];
+  var audio = new Audio();
+  var current = -1;
+
+  function stopAll() {
+    audio.pause();
+    document.querySelectorAll('.song.playing').forEach(function (el) {
+      el.classList.remove('playing');
+    });
+  }
+
+  document.querySelectorAll('.song .art').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var row = btn.closest('.song');
+      var i = parseInt(row.dataset.i, 10);
+
+      if (current === i && !audio.paused) {
+        stopAll();
+        current = -1;
+        return;
+      }
+
+      stopAll();
+      current = i;
+      audio.src = previews[i];
+      audio.play().then(function () {
+        row.classList.add('playing');
+      }).catch(function () {
+        current = -1;
+      });
+    });
+  });
+
+  audio.addEventListener('ended', function () {
+    stopAll();
+    current = -1;
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Tap Tempo — Support</title>
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    line-height: 1.65;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+    color: #1a1a1a;
+    background: #fff;
+  }
+  header { display: flex; align-items: center; gap: 18px; margin-bottom: 8px; }
+  .icon {
+    width: 76px; height: 76px; border-radius: 17px; flex-shrink: 0;
+    background: radial-gradient(circle at 50% 50%, #ff8a6b 0 16%, #12151f 17%);
+    box-shadow: inset 0 0 0 1px rgba(255,107,69,0.25);
+    position: relative;
+  }
+  .icon::after {
+    content: ""; position: absolute; inset: 18%;
+    border: 2px solid rgba(255,107,69,0.45); border-radius: 50%;
+  }
+  h1 { font-size: 30px; margin: 0; letter-spacing: -0.02em; }
+  .sub { color: #666; font-size: 16px; margin: 2px 0 0; }
+  h2 { font-size: 19px; margin-top: 38px; margin-bottom: 8px; letter-spacing: -0.01em; }
+  h3 { font-size: 16px; margin-top: 24px; margin-bottom: 4px; }
+  a { color: #c1471f; }
+  ul { padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  .contact {
+    background: #faf7f5;
+    border-left: 3px solid #ff6b45;
+    padding: 16px 20px;
+    margin: 28px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  footer {
+    margin-top: 48px; padding-top: 22px;
+    border-top: 1px solid #e5e5e5;
+    color: #888; font-size: 14px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="icon"></div>
+  <div>
+    <h1>Free Tap Tempo</h1>
+    <p class="sub">Tap tempo. No ads, no cost, ever.</p>
+  </div>
+</header>
+
+<h2>What it does</h2>
+<p>
+Tap anywhere on the screen along to a beat. The app tells you the tempo in beats
+per minute. Tap a few more times and it tightens up. That's the whole idea.
+</p>
+
+<h2>How to use it</h2>
+
+<h3>Finding a tempo</h3>
+<p>
+Tap the screen in time with the music. After two taps you'll see a number. It
+keeps refining as you continue, weighting your most recent taps most heavily, so
+if you settle into the groove after a few beats the reading follows you. Stop for
+a couple of seconds and the next tap starts a fresh measurement.
+</p>
+
+<h3>The metronome</h3>
+<p>
+Tap <strong>Click</strong> to hear the tempo you just found. It plays at your
+current BPM and re-syncs immediately if you tap out a new one. The click mixes
+with other audio rather than interrupting it, so you can run it alongside a
+recording.
+</p>
+
+<h3>Presets</h3>
+<p>
+The three buttons above the controls jump straight to a set tempo. Useful as
+reference points, or as a starting place before you adjust by ear.
+</p>
+
+<h3>Reset</h3>
+<p>
+Clears the current reading and stops the metronome.
+</p>
+
+<h2>Common questions</h2>
+
+<h3>Is it really free?</h3>
+<p>
+Yes. No ads, no subscription, no in-app purchases, no paid tier, no account. It
+was built because tap tempo is a trivially simple tool that shouldn't cost
+anything.
+</p>
+
+<h3>Does it collect my data?</h3>
+<p>
+No. Nothing at all. See the <a href="privacy.html">privacy policy</a> — it is
+short.
+</p>
+
+<h3>Why does my reading jump around?</h3>
+<p>
+Tapping accuracy is the usual cause. Try tapping through at least four or five
+beats and letting the number settle. Very fast tempos are easier to measure by
+tapping every other beat and doubling the result.
+</p>
+
+<h3>The screen won't dim.</h3>
+<p>
+That's deliberate. The app keeps the display awake while it's open so you don't
+have to wake the phone mid-rehearsal. Leaving the app restores your normal
+auto-lock behavior.
+</p>
+
+<h3>Will it work on my iPad?</h3>
+<p>
+Yes. It runs on iPhone and iPad, in portrait orientation.
+</p>
+
+<div class="contact">
+<strong>Need help, or found a bug?</strong><br>
+Email <a href="mailto:mdv.vincent@gmail.com">mdv.vincent@gmail.com</a> and
+I'll get back to you.
+</div>
+
+<footer>
+Free Tap Tempo is made by <a href="../">Matt Vincent</a>, a musician who got tired
+of paying for a tap tempo app.<br>
+<a href="privacy.html">Privacy policy</a>
+</footer>
+
+</body>
+</html>
